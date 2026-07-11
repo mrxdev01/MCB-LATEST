@@ -1,0 +1,371 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-sans: "Ubuntu", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Ubuntu", ui-serif, Georgia, serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-soft: var(--brand-soft);
+}
+
+:root {
+  --radius: 1rem;
+
+  --brand-primary: #d5527a;
+  --brand-secondary: #2a1a1f;
+  --brand-accent: #d4b26a;
+  --brand-bg: #fbf6f7;
+  --brand-soft: #f7d9e3;
+
+  --background: #fbf6f7;
+  --foreground: #2a1a1f;
+  --card: #ffffff;
+  --card-foreground: #2a1a1f;
+  --popover: #ffffff;
+  --popover-foreground: #2a1a1f;
+  --primary: #d5527a;
+  --primary-foreground: #ffffff;
+  --secondary: #fbe7ee;
+  --secondary-foreground: #2a1a1f;
+  --muted: #f4e6eb;
+  --muted-foreground: #7a6168;
+  --accent: #d4b26a;
+  --accent-foreground: #2a1a1f;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --border: rgba(213, 82, 122, 0.14);
+  --input: rgba(42, 26, 31, 0.12);
+  --ring: #d5527a;
+
+  --gradient-blush: linear-gradient(135deg, #fbe7ee 0%, #fbf6f7 60%, #ffffff 100%);
+  --gradient-primary: linear-gradient(135deg, #e97aa0 0%, #d5527a 50%, #b53c66 100%);
+  --shadow-soft: 0 10px 30px -18px rgba(213, 82, 122, 0.35);
+  --shadow-lift: 0 22px 50px -22px rgba(213, 82, 122, 0.45);
+}
+
+@utility bg-gradient-blush {
+  background-image: var(--gradient-blush);
+}
+@utility bg-gradient-primary {
+  background-image: var(--gradient-primary);
+}
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+@utility shadow-lift {
+  box-shadow: var(--shadow-lift);
+}
+@utility card-hover {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+@utility card-hover-hover {
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+/* Animated hero background */
+@utility hero-bg {
+  background:
+    radial-gradient(1200px 600px at 10% 10%, rgba(213, 82, 122, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 90% 20%, rgba(212, 178, 106, 0.22), transparent 60%),
+    radial-gradient(800px 500px at 50% 100%, rgba(233, 122, 160, 0.20), transparent 60%),
+    linear-gradient(135deg, #fff5f7 0%, #ffe8ee 45%, #fde4d3 100%);
+}
+@utility hero-grid-lines {
+  background-image:
+    linear-gradient(to right, rgba(213, 82, 122, 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(213, 82, 122, 0.10) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, black 55%, transparent 100%);
+}
+@utility hero-aurora {
+  /* Cheap static radial — no filter:blur (big blurs force offscreen
+     compositing on every scroll frame, tanking FPS on mid-range phones). */
+  background:
+    radial-gradient(closest-side at 50% 50%, rgba(213, 82, 122, 0.22), transparent 70%),
+    radial-gradient(closest-side at 60% 40%, rgba(212, 178, 106, 0.18), transparent 70%);
+}
+@utility hero-blob {
+  /* Decorative floating orbs removed — `blur-3xl` on big divs was a top
+     scroll-cost even when static. Hero already has soft radial gradients. */
+  display: none !important;
+}
+@utility hero-blob-slow {
+  display: none !important;
+}
+@utility hero-shine {
+  display: none !important;
+}
+@utility hero-noise {
+  display: none !important;
+}
+
+@keyframes hero-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes hero-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -18px, 0); }
+}
+
+/* ============================================================
+   Page + scroll reveal
+   Default state is ALWAYS visible — animations only enhance.
+   ============================================================ */
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Skeleton shimmer — brand-tinted sweep for loading placeholders */
+@keyframes brand-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton-shimmer {
+  background-color: color-mix(in oklab, var(--brand-soft) 75%, white);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--brand-primary) 18%, transparent) 45%,
+    color-mix(in oklab, white 70%, transparent) 50%,
+    color-mix(in oklab, var(--brand-primary) 18%, transparent) 55%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: brand-shimmer 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer { animation: none; }
+}
+
+/* Every top-level <section> inside <main> gently fades + lifts in on mount.
+   Uses pure CSS so content is guaranteed visible even if JS fails. */
+main > section {
+  animation: reveal-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+main > section:nth-of-type(1) { animation-delay: 0ms; }
+main > section:nth-of-type(2) { animation-delay: 90ms; }
+main > section:nth-of-type(3) { animation-delay: 160ms; }
+main > section:nth-of-type(4) { animation-delay: 220ms; }
+main > section:nth-of-type(5) { animation-delay: 270ms; }
+main > section:nth-of-type(n + 6) { animation-delay: 320ms; }
+
+/* Opt-in scroll reveal — safe fallback (visible by default).
+   Only when JS mounts ScrollReveal AND finds these nodes, it hides them
+   then reveals on intersect. Add data-reveal / data-reveal-cascade freely. */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.js-reveal [data-reveal="left"] { transform: translate3d(-32px, 0, 0); }
+.js-reveal [data-reveal="right"] { transform: translate3d(32px, 0, 0); }
+.js-reveal [data-reveal="zoom"] { transform: scale(0.95); }
+.js-reveal [data-reveal="fade"] { transform: none; }
+.js-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js-reveal [data-reveal-cascade] > * {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.js-reveal [data-reveal-cascade].is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+.js-reveal [data-reveal-cascade].is-visible > *:nth-child(1) { transition-delay: 40ms; }
+.js-reveal [data-reveal-cascade].is-visible > *:nth-child(2) { transition-delay: 110ms; }
+.js-reveal [data-reveal-cascade].is-visible > *:nth-child(3) { transition-delay: 180ms; }
+.js-reveal [data-reveal-cascade].is-visible > *:nth-child(4) { transition-delay: 250ms; }
+.js-reveal [data-reveal-cascade].is-visible > *:nth-child(5) { transition-delay: 320ms; }
+.js-reveal [data-reveal-cascade].is-visible > *:nth-child(6) { transition-delay: 390ms; }
+.js-reveal [data-reveal-cascade].is-visible > *:nth-child(7) { transition-delay: 460ms; }
+.js-reveal [data-reveal-cascade].is-visible > *:nth-child(8) { transition-delay: 530ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  main > section,
+  .js-reveal [data-reveal],
+  .js-reveal [data-reveal-cascade] > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+  button, a { touch-action: manipulation; }
+  img { content-visibility: auto; }
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.015em;
+    font-weight: 700;
+  }
+}
+
+/* --- Performance: below-the-fold sections lazy paint --- */
+@utility content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
+
+/* Instant scroll — smooth caused perceived lag on route change / anchor jumps */
+html { scroll-behavior: auto; }
+
+/* Defer paint of every off-screen section — huge scroll-perf win.
+   Skips the hero (first section) so LCP isn't blocked. */
+main > section ~ section {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
+
+/* GPU-promote the marquee track so it composites on its own layer
+   instead of repainting the whole section every frame. */
+[style*="marquee-x"] {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* On small screens, drop the heaviest decorative layers. */
+@media (max-width: 640px) {
+  .hero-aurora { display: none !important; }
+  .hero-grid-lines {
+    background-size: 28px 28px !important;
+    background-image:
+      linear-gradient(to right, rgba(213, 82, 122, 0.09) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(213, 82, 122, 0.09) 1px, transparent 1px) !important;
+    mask-image: radial-gradient(ellipse at center, black 45%, transparent 95%) !important;
+  }
+}
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-grid-lines { background-size: 36px 36px !important; }
+}
+
+/* Hide Lovable badge on published site */
+#lovable-badge,
+#lovable-badge-close,
+[id^="lovable-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Rich blog content styling */
+.blog-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+.blog-content thead {
+  background: linear-gradient(135deg, var(--brand-primary, #d5527a), color-mix(in oklab, var(--brand-primary, #d5527a) 70%, white));
+}
+.blog-content thead th {
+  color: white !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.75rem;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  border: none !important;
+}
+.blog-content tbody tr {
+  background: white;
+  transition: background 0.15s;
+}
+.blog-content tbody tr:nth-child(even) { background: color-mix(in oklab, var(--brand-primary, #d5527a) 4%, white); }
+.blog-content tbody tr:hover { background: color-mix(in oklab, var(--brand-primary, #d5527a) 8%, white); }
+.blog-content tbody td {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid color-mix(in oklab, var(--brand-primary, #d5527a) 10%, white) !important;
+  vertical-align: top;
+}
+.blog-content ul > li::marker { color: var(--brand-primary, #d5527a); }
+.blog-content ol > li::marker { color: var(--brand-primary, #d5527a); font-weight: 700; }
+.blog-content h2 { scroll-margin-top: 5rem; }
+.blog-content h3 { scroll-margin-top: 5rem; }
+
